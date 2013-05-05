@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 package MP3Tagger;
 
-my $VERSION = "0.1.0";
+my $VERSION = "0.1.1";
 
 use strict;
 use warnings;
@@ -147,7 +147,7 @@ sub tag_album_dir {
     my $verbose = shift;
     $dir = File::Spec->rel2abs(File::Spec->canonpath($dir));
     confess("Invalid album dir. $dir does not exist") if ! -e $dir;
-    my @files = glob("$dir/*.mp3");
+    my @files = glob("'$dir'/*.mp3");
     return $self->tag_files(\@files, $verbose);
 }
 
@@ -157,7 +157,7 @@ sub tag_artist_dir {
     my $verbose = shift;
     $dir = File::Spec->rel2abs(File::Spec->canonpath($dir));
     confess("Invalid artist dir. $dir dies not exist") if ! -e $dir;
-    my @files = glob("$dir/*");
+    my @files = glob("'$dir'/*");
     my @albums = grep { -d $_ } @files;
     for my $album (@albums) {
         $self->tag_album_dir($album, $verbose);
